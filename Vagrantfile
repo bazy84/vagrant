@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   #config.vm.box = "centos-6.5-x86_64-bazy84"
-  #config.vm.box_url = "http://10.56.0.153/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+  #config.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
   #
   #config.hostmanager.enabled = false
   #config.hostmanager.manage_host = false
@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.hostmanager.include_offline = true
   config.vm.define "node1" do |node1|
     node1.vm.box = "centos-6.5-x86_64-bazy84"
-    node1.vm.box_url = "http://10.56.0.153/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    node1.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
     node1.vm.provision :shell, :path => "provision_puppet.sh"
     node1.vm.hostname = "node1.test.lab"
     node1.vm.network :private_network, ip: '192.168.42.2'
@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define :node2 do |node2|
     node2.vm.box = "centos-6.5-x86_64-bazy84"
-    node2.vm.box_url = "http://10.56.0.153/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    node2.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
     node2.vm.provision :shell, :path => "provision_puppet.sh"
     node2.vm.hostname = "node2.test.lab"
     node2.vm.network :private_network, ip: '192.168.42.3'
@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define :node3 do |node3|
     node3.vm.box = "centos-6.5-x86_64-bazy84"
-    node3.vm.box_url = "http://10.56.0.153/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    node3.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
     node3.vm.provision :shell, :path => "provision_puppet.sh"
     node3.vm.hostname = "node3.test.lab"
     node3.vm.network :private_network, ip: '192.168.42.4'
