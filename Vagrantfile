@@ -44,6 +44,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.cpus = 2
     end
   end
+  (1..5).each do |i|
+    config.vm.define "slave#{i}" do |slave|
+      slave.vm.box = "centos-6.5-x86_64-bazy84"
+      slave.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+      slave.vm.hostname = "slave#{i}.test.lab"
+      slave.vm.network :private_network, ip: "192.168.42.10#{i}"
+      slave.vm.provision :shell, :path => "provision_puppet.sh"
+      slave.vm.provider "virtualbox" do |v|
+        v.memory = 512
+      end
+    end
+  end
   
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
