@@ -23,6 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node1.vm.provision :shell, :path => "provision_puppet.sh"
     node1.vm.hostname = "node1.test.lab"
     node1.vm.network :private_network, ip: '192.168.42.2'
+    node1.vm.network "forwarded_port", guest: 80, host: 8181
     #node1.hostmanager.aliases = %w(node1.localdomain node1)
   end
   config.vm.define :node2 do |node2|
@@ -43,6 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.memory = 2048
       v.cpus = 2
     end
+## enjoying ruby for each :)
   end
   (1..5).each do |i|
     config.vm.define "slave#{i}" do |slave|
