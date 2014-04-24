@@ -13,10 +13,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.box = "centos-6.5-x86_64-bazy84"
   #config.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
   #
-  #config.hostmanager.enabled = false
-  #config.hostmanager.manage_host = false
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
   #config.hostmanager.ignore_private_ip = false
   #config.hostmanager.include_offline = true
+  config.vm.define "puppet" do |puppet|
+    puppet.vm.box = "centos-6.5-x86_64-bazy84"
+    puppet.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    #puppet.vm.provision :shell, :path => "provision_puppet.sh"
+    puppet.vm.hostname = "puppet.test.lab"
+    puppet.vm.network :private_network, ip: '192.168.42.99'
+    #puppet.vm.network "forwarded_port", guest: 80, host: 8181
+    puppet.hostmanager.enabled = true
+    puppet.hostmanager.manage_host = true
+    #puppet.hostmanager.aliases = %w(puppet.test.lab puppet)
+  end
   config.vm.define "node1" do |node1|
     node1.vm.box = "centos-6.5-x86_64-bazy84"
     node1.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
@@ -25,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node1.vm.network :private_network, ip: '192.168.42.2'
     node1.vm.network "forwarded_port", guest: 80, host: 8181
     #node1.hostmanager.aliases = %w(node1.localdomain node1)
-  end
+   end
   config.vm.define :node2 do |node2|
     node2.vm.box = "centos-6.5-x86_64-bazy84"
     node2.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
@@ -53,6 +64,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       slave.vm.hostname = "slave#{i}.test.lab"
       slave.vm.network :private_network, ip: "192.168.42.10#{i}"
       slave.vm.provision :shell, :path => "provision_puppet.sh"
+      slave.hostmanager.enabled = true
+      slave.hostmanager.manage_host = true
       slave.vm.provider "virtualbox" do |v|
         v.memory = 512
       end
