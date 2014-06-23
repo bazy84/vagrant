@@ -11,26 +11,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   #config.vm.box = "centos-6.5-x86_64-bazy84"
-  #config.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+  #config.vm.box_url = "http://critu.eu/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
   #
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   #config.hostmanager.ignore_private_ip = false
   #config.hostmanager.include_offline = true
-  config.vm.define "puppet" do |puppet|
-    puppet.vm.box = "centos-6.5-x86_64-bazy84"
-    puppet.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
-    #puppet.vm.provision :shell, :path => "provision_puppet.sh"
-    puppet.vm.hostname = "puppet.test.lab"
-    puppet.vm.network :private_network, ip: '192.168.42.99'
-    #puppet.vm.network "forwarded_port", guest: 80, host: 8181
-    puppet.hostmanager.enabled = true
-    puppet.hostmanager.manage_host = true
-    #puppet.hostmanager.aliases = %w(puppet.test.lab puppet)
+  config.vm.define "puppetmaster" do |puppetmaster|
+    puppetmaster.vm.box = "centos-6.5-x86_64-bazy84"
+    puppetmaster.vm.box_url = "http://critu.eu/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    #puppetmaster.vm.provision :shell, :path => "provision_puppet.sh"
+    puppetmaster.vm.hostname = "puppetmaster.test.lab"
+    puppetmaster.vm.network :private_network, ip: '192.168.42.99'
+    #puppetmaster.vm.network "forwarded_port", guest: 80, host: 8181
+    puppetmaster.hostmanager.enabled = true
+    puppetmaster.hostmanager.manage_host = true
+    #puppetmaster.hostmanager.aliases = %w(puppetmaster.test.lab puppetmaster)
   end
   config.vm.define "node1" do |node1|
     node1.vm.box = "centos-6.5-x86_64-bazy84"
-    node1.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    node1.vm.box_url = "http://critu.eu/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
     node1.vm.provision :shell, :path => "provision_puppet.sh"
     node1.vm.hostname = "node1.test.lab"
     node1.vm.network :private_network, ip: '192.168.42.2'
@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    end
   config.vm.define :node2 do |node2|
     node2.vm.box = "centos-6.5-x86_64-bazy84"
-    node2.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    node2.vm.box_url = "http://critu.eu/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
     node2.vm.provision :shell, :path => "provision_puppet.sh"
     node2.vm.hostname = "node2.test.lab"
     node2.vm.network :private_network, ip: '192.168.42.3'
@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define :node3 do |node3|
     node3.vm.box = "centos-6.5-x86_64-bazy84"
-    node3.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+    node3.vm.box_url = "http://critu.eu/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
     node3.vm.provision :shell, :path => "provision_puppet.sh"
     node3.vm.hostname = "node3.test.lab"
     node3.vm.network :private_network, ip: '192.168.42.4'
@@ -57,10 +57,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 ## enjoying ruby for each :)
   end
-  (1..5).each do |i|
+  (1..20).each do |i|
     config.vm.define "slave#{i}" do |slave|
       slave.vm.box = "centos-6.5-x86_64-bazy84"
-      slave.vm.box_url = "http://kozlov.snort.ro/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
+      slave.vm.box_url = "http://critu.eu/vagrant/packer_centos-6.5-x86_64-bazy84_virtualbox.box"
       slave.vm.hostname = "slave#{i}.test.lab"
       slave.vm.network :private_network, ip: "192.168.42.10#{i}"
       slave.vm.provision :shell, :path => "provision_puppet.sh"
